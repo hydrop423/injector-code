@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Any, Dict, Literal
 
 from .base import Injector
-from .models import DesignChoices, EngineInputs, PropellantInputs, FeedSystemInputs
+from .inputs import DesignChoices, EngineInputs, PropellantInputs, FeedSystemInputs
 
 
 @dataclass
@@ -25,7 +25,7 @@ class PintleInjector(Injector):
         print("[PintleInjector.size] Placeholder sizing.")
         return {
             "pintle_type": self.pint.pintle_type,
-            "example_gap_m": 0.0005,  # placeholder
+            "example_gap_m": 0.0005,
         }
 
     def check_constraints(self) -> None:

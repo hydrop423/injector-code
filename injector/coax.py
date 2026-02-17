@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Any, Dict, Literal
 
 from .base import Injector
-from .models import DesignChoices, EngineInputs, PropellantInputs, FeedSystemInputs
+from .inputs import DesignChoices, EngineInputs, PropellantInputs, FeedSystemInputs
 
 
 @dataclass
@@ -25,7 +25,7 @@ class CoaxInjector(Injector):
         print("[CoaxInjector.size] Placeholder sizing.")
         return {
             "coax_type": self.coax.coax_type,
-            "example_inner_d_m": 0.002,  # placeholder
+            "example_inner_d_m": 0.002,
         }
 
     def check_constraints(self) -> None:

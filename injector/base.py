@@ -2,7 +2,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Tuple
 
-from .models import EngineInputs, PropellantInputs, FeedSystemInputs, DesignChoices
+from .inputs import EngineInputs, PropellantInputs, FeedSystemInputs, DesignChoices
 
 
 class Injector(ABC):
@@ -32,24 +32,24 @@ class Injector(ABC):
         return self.report(geom)
 
     def validate_inputs(self) -> None:
-        """Placeholder validation."""
+        #Catch errors or missing data BEFORE running size()
         print("[Injector.validate_inputs] This is the base validation (placeholder).")
 
     @abstractmethod
     def size(self) -> Dict[str, Any]:
-        """Compute geometry (type-specific)."""
+        #Main method to size the injector
         raise NotImplementedError
 
     @abstractmethod
     def check_constraints(self) -> None:
-        """Type-specific constraint checks (placeholder)."""
+        #Validate the results AFTER running size(). Sanity check and manufacturable
         raise NotImplementedError
 
     def report(self, geometry: Dict[str, Any]) -> Dict[str, Any]:
-        """Return a dict that proves the pipeline ran."""
+        #Output results. Print, CSV, plots, etc.
         print("[Injector.report] Returning placeholder report dict.")
         return {
             "injector_type": self.__class__.__name__,
             "geometry": geometry,
-            "sanity": 3 + 2,  # placeholder proof-of-life
+            "sanity": 3 + 2,
         }
