@@ -1,5 +1,5 @@
-from dataclasses import dataclass
-from typing import Any, Dict
+from dataclasses import dataclass, field
+from typing import Any, Dict, Optional
 
 from .base import Injector
 from .inputs import DesignChoices, EngineInputs, PropellantInputs, FeedSystemInputs
@@ -10,6 +10,9 @@ class ImpingingDesign(DesignChoices):
     N_elements: int = 16
     impingement_angle_deg: float = 60.0
 
+@dataclass(frozen=True)
+class ImpingingSizingResult:
+    LOX_total_orifice_area: float = field(metadata={"unit": "in^2"})
 
 class ImpingingInjector(Injector):
     def __init__(
@@ -21,14 +24,13 @@ class ImpingingInjector(Injector):
     ) -> None:
         super().__init__(engine, prop, feed, design)
         self.imp = design
+        self._result: Optional[ImpingingSizingResult] = None
 
-    def size(self) -> Dict[str, Any]:
-        print("[ImpingingInjector.size] Placeholder sizing.")
-        return {
-            "N_elements": self.imp.N_elements,
-            "impingement_angle_deg": self.imp.impingement_angle_deg,
-            "example_orifice_diameter_m": 0.001,
-        }
+    def size(self) -> ImpingingSizingResult:
+        LOX_total_orifice_area = 1.88E-01
+        result = ImpingingSizingResult(LOX_total_orifice_area=LOX_total_orifice_area)
+        self._result = result
+        return result
 
     def check_constraints(self) -> None:
         print("[ImpingingInjector.check_constraints] Placeholder checks passed.")

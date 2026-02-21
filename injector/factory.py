@@ -18,7 +18,6 @@ class InjectorFactory:
         feed: FeedSystemInputs,
         design: DesignChoices,
     ) -> Injector:
-        print(f"[InjectorFactory.create] Creating injector_type={injector_type}")
 
         if injector_type == "impinging":
             if not isinstance(design, ImpingingDesign):
