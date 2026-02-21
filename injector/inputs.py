@@ -4,29 +4,33 @@ from typing import Optional
 
 @dataclass
 class EngineInputs:
-    Pc: float
-    Dc: float
-    mdot_total: Optional[float] = None
-    MR_target: Optional[float] = None
+    Pc = 21.6, #bar
+    Dc = 0.105, #m
+    MR = 2, # LOX/fuel
 
 
 @dataclass
 class PropellantInputs:
-    rho_o: float
-    rho_f: float
-    mu_o: float
-    mu_f: float
+    LOX_density = 1.141, #kg/L
+    LOX_temperature = 90, #K
+    LOX_m_dot = 3.24, #kg/s
+    LOX_volume_flow = 2.8396, #L/s
+
+    fuel_density = 0.8, #kg/L
+    fuel_temperature = 293, #K
+    fuel_m_dot = 1.62, #kg/s
+    fuel_volume_flow = 2.0250, #L/s
 
 
 @dataclass
 class FeedSystemInputs:
-    dP_o: Optional[float] = None
-    dP_f: Optional[float] = None
-    Pin_o: Optional[float] = None
-    Pin_f: Optional[float] = None
+    LOX_inlet_pressure = 25.92, #bar
+    LOX_pressure_drop = 4.32, #bar
+
+    fuel_inlet_pressure = 25.92, #bar
+    fuel_pressure_drop = 4.32, #bar
 
 
 @dataclass
 class DesignChoices:
-    Cd_o: float = 0.85
-    Cd_f: float = 0.85
+    pass

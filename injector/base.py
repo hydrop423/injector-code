@@ -1,6 +1,7 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Tuple
+from dataclasses import asdict, fields
 
 from .inputs import EngineInputs, PropellantInputs, FeedSystemInputs, DesignChoices
 
@@ -21,14 +22,9 @@ class Injector(ABC):
         self.design = design
 
     def run(self) -> Dict[str, Any]:
-        """
-        Skeleton pipeline:
-        validate -> size -> check -> report
-        """
-        print(f"[Injector.run] Running {self.__class__.__name__}")
-        self.validate_inputs()
+        # self.validate_inputs()
         geom = self.size()
-        self.check_constraints()
+        # self.check_constraints()
         return self.report(geom)
 
     def validate_inputs(self) -> None:
@@ -45,11 +41,15 @@ class Injector(ABC):
         #Validate the results AFTER running size(). Sanity check and manufacturable
         raise NotImplementedError
 
-    def report(self, geometry: Dict[str, Any]) -> Dict[str, Any]:
-        #Output results. Print, CSV, plots, etc.
-        print("[Injector.report] Returning placeholder report dict.")
-        return {
-            "injector_type": self.__class__.__name__,
-            "geometry": geometry,
-            "sanity": 3 + 2,
-        }
+
+    def report(self, geometry) -> Dict[str, Any]:
+        formatted = {}
+
+        for f in fields(geometry):
+            value = getattr(geometry, f.name)
+            unit = f.metadata.get("unit", "")
+            formatted_value = f"{value} {unit}".strip()
+            formatted[f.name] = formatted_value
+            print(f"{f.name}: {formatted_value}")
+
+        return formatted
