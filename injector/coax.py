@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Any, Dict, Literal
 
-from .base import Injector
+from .injector import Injector
 from .inputs import DesignChoices, EngineInputs, PropellantInputs, FeedSystemInputs
 
 

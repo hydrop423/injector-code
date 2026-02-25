@@ -44,9 +44,18 @@ class Injector(ABC):
 
     def report(self, geometry) -> Dict[str, Any]:
         formatted = {}
+        inserted_break = False
 
         for f in fields(geometry):
             value = getattr(geometry, f.name)
+            
+            if f.name.startswith("fuel_") and not inserted_break:
+                print()
+                inserted_break = True
+            
+            if isinstance(value, float):
+                value = round(value, 4)
+
             unit = f.metadata.get("unit", "")
             formatted_value = f"{value} {unit}".strip()
             formatted[f.name] = formatted_value
